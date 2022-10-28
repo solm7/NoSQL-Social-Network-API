@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { model, Schema } = require("mongoose");
 
 const thoughtSchema = new Schema(
   {
@@ -42,6 +42,33 @@ const thoughtSchema = new Schema(
     return this.reactions.length;
   })
 );
+const reactionSchema = new Schema({
+  reactionId: {
+    type: Schema.Types.ObjectId,
+    default: () => new Types.ObjectId(),
+  },
+  reactionBody: {
+    type: String,
+    required: true,
+    maxLength: 280,
+  },
+  username: {
+    type: String,
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+    get() {
+      return Date.toLocaleDateString("en-us", {
+        weekday: "long",
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      });
+    },
+  },
+});
 const Thought = model("thought", thoughtSchema);
 
 module.exports = Thought;
