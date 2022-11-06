@@ -48,18 +48,18 @@ const userController = {
         new: true,
       }
     )
-      .then((dbUserData) => {
-        if (!dbUserData) {
+      .then((UserData) => {
+        if (!UserData) {
           return res.status(404).json({ message: "No user with this id" });
         }
-        res.json(dbUserData);
+        res.json(UserData);
       })
       .catch((err) => {
         console.log(err);
         res.status(500).json(err);
       });
   },
-  // delete user associated thoughts
+
   removeUser(req, res) {
     User.findOneAndRemove({ _id: req.params.userId })
       .then((user) =>
